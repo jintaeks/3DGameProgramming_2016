@@ -9,6 +9,7 @@
 #include "KCharacterController.h"
 #include "KCharacterUtil.h"
 
+// added line. jintaeks on 2016-09-28_11-31
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
