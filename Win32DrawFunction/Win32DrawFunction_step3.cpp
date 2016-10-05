@@ -6,6 +6,7 @@
 #include <stdio.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "KVector.h"
 
 #define MAX_LOADSTRING 100
 
@@ -211,10 +212,29 @@ void DrawLine(HDC hdc, int x1, int y1, int x2, int y2)
 	LineTo(hdc, x2 + halfWidth, -y2 + halfHeight);
 }
 
+void DrawLine(HDC hdc, KVector v0, KVector v1)
+{
+    DrawLine(hdc, (int)v0.x, (int)v0.y, (int)v1.x, (int)v1.y);
+}
+
 // f(x) = x^2
 float Function(float x)
 {
 	return x * x;
+}
+
+float FunctionPrime(float x)
+{
+    return 2.f * x;
+}
+
+KVector FunctionTangent(float x) {
+    KVector vTangent;
+    vTangent.x = 1.f;
+    vTangent.y = FunctionPrime(x);
+    vTangent.Normalize();
+
+    return vTangent;
 }
 
 void Rotate(float theta, float& x, float& y)
@@ -238,7 +258,7 @@ void OnPaint(HDC hdc)
 	SelectObject( hdc, GetStockObject(DC_PEN));
     SetDCPenColor(hdc, RGB(255, 0, 0));
     DrawLine(hdc, xAxis0.x, xAxis0.y, xAxis1.x, xAxis1.y);
-    SetDCPenColor(hdc, RGB(0, 255, 0, 0));
+    SetDCPenColor(hdc, RGB(0, 255, 0));
     DrawLine(hdc, yAxis0.x, yAxis0.y, yAxis1.x, yAxis1.y);
 
     // test draw a line and rotated line
@@ -260,6 +280,20 @@ void OnPaint(HDC hdc)
 		xPrev = x;
 		yPrev = y;
 	}
+
+    // draw a tangent line
+    //
+    const float x0 = 3.0f;
+    KVector     v0;
+    KVector     v1;
+    KVector     v2;
+    KVector     vTangent;
+    v0.x = x0;
+    v0.y = Function(v0.x);
+    vTangent = FunctionTangent(v0.x);
+    v1 = v0 - 100.f * vTangent;
+    v2 = v0 + 100.f * vTangent;
+    DrawLine(hdc, v1*fScale, v2*fScale);
 }
 
 float random()
