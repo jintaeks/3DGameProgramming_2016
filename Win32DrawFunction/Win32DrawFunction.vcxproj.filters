@@ -30,12 +30,18 @@
     <ClInclude Include="Win32DrawFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="KVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Win32DrawFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

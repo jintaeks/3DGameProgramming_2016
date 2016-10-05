@@ -229,19 +229,22 @@ void Rotate(float theta, float& x, float& y)
 void OnPaint(HDC hdc)
 {
 	const float fScale = 10.f;
-	int x1XAxis = -(g_clientWidth / 2);
-	int y1XAxis = 0;
-	int x2XAxis = +(g_clientWidth / 2);
-	int y2XAxis = 0;
+    POINT xAxis0 = { -(g_clientWidth / 2), 0 };
+    POINT xAxis1 = { +(g_clientWidth / 2), 0 };
+    POINT yAxis0 = { 0, -(g_clientHeight / 2) };
+    POINT yAxis1 = { 0, +(g_clientHeight / 2) };
 
-	// draw x-axis
-	SelectObject(hdc, GetStockObject(DC_PEN));
-	SetDCPenColor(hdc, RGB(255, 0, 0));
-	DrawLine(hdc, x1XAxis, y1XAxis, x2XAxis, y2XAxis);
+	// draw x-axis and y-axis
+	SelectObject( hdc, GetStockObject(DC_PEN));
+    SetDCPenColor(hdc, RGB(255, 0, 0));
+    DrawLine(hdc, xAxis0.x, xAxis0.y, xAxis1.x, xAxis1.y);
+    SetDCPenColor(hdc, RGB(0, 255, 0, 0));
+    DrawLine(hdc, yAxis0.x, yAxis0.y, yAxis1.x, yAxis1.y);
 
+    // test draw a line and rotated line
 	float x = 100.f;
 	float y = 50.f;
-	SetDCPenColor(hdc, RGB(0, 255, 0));
+	SetDCPenColor(hdc, RGB(0, 0, 255));
 	DrawLine(hdc, 0, 0, x, y);
 	Rotate(45.f * M_PI / 180.f, x, y);
 	DrawLine(hdc, 0, 0, x, y);
